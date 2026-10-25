@@ -18,9 +18,9 @@ If you run out of energy, a popup offers a simulated "Watch ad: +5 energy." Prog
 
 ## Live link
 
-https://riya-juyal.github.io/merge-mortem/
+Pending manual GitHub repo creation and Pages setup (see "Shipping to GitHub Pages" below). Once pushed, it will be available at:
 
-*(Pending manual GitHub repo creation and Pages setup — see below if not yet live.)*
+`https://<your-github-username>.github.io/merge-mortem/`
 
 ## Project structure
 
@@ -39,3 +39,15 @@ https://riya-juyal.github.io/merge-mortem/
 ```
 
 Output is written to `docs/` with WebGL compression disabled, so it can be served directly by GitHub Pages.
+
+## Shipping to GitHub Pages
+
+1. Create a new public repo on github.com (e.g. `merge-mortem`), without a README/license/gitignore.
+2. From this project directory:
+   ```
+   git remote add origin https://github.com/<your-github-username>/merge-mortem.git
+   git branch -M main
+   git push -u origin main
+   ```
+3. On GitHub: Settings → Pages → Build and deployment → Source: "Deploy from a branch" → Branch: `main`, folder `/docs` → Save.
+4. The game will be live at `https://<your-github-username>.github.io/merge-mortem/` within a few minutes.
