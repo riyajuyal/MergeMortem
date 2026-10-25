@@ -113,8 +113,10 @@ namespace MergeMortem
 
         void BuildTopBar()
         {
-            GameObject panel = CreatePanel("TopBar", transform, new Vector2(0, 1), new Vector2(1, 1),
-                new Vector2(10, -96), new Vector2(-10, -10));
+            GameObject panel = CreatePanel("TopBar", transform, new Vector2(0, 1), new Vector2(1, 1));
+            RectTransform panelRt = panel.GetComponent<RectTransform>();
+            panelRt.anchoredPosition = new Vector2(0, -10);
+            panelRt.sizeDelta = new Vector2(-20, 86);
 
             HorizontalLayoutGroup hlg = panel.AddComponent<HorizontalLayoutGroup>();
             hlg.padding = new RectOffset(16, 16, 10, 10);
@@ -238,16 +240,20 @@ namespace MergeMortem
                 cellTileImg[i] = tileImg;
                 cellTileGO[i] = tileGO;
 
-                Text label = CreateLabel("", tileGO.transform, 13, Color.white, FontStyle.Bold, TextAnchor.MiddleCenter);
+                Text label = CreateLabel("", tileGO.transform, 17, Color.white, FontStyle.Bold, TextAnchor.MiddleCenter);
                 RectTransform labelRt = label.GetComponent<RectTransform>();
                 labelRt.anchorMin = new Vector2(0.05f, 0.35f);
                 labelRt.anchorMax = new Vector2(0.95f, 0.85f);
                 labelRt.offsetMin = Vector2.zero;
                 labelRt.offsetMax = Vector2.zero;
                 label.horizontalOverflow = HorizontalWrapMode.Wrap;
+                label.verticalOverflow = VerticalWrapMode.Overflow;
+                label.resizeTextForBestFit = true;
+                label.resizeTextMinSize = 10;
+                label.resizeTextMaxSize = 17;
                 cellTileLabel[i] = label;
 
-                Text dots = CreateLabel("", tileGO.transform, 14, Color.white, FontStyle.Bold, TextAnchor.MiddleCenter);
+                Text dots = CreateLabel("", tileGO.transform, 18, Color.white, FontStyle.Bold, TextAnchor.MiddleCenter);
                 RectTransform dotsRt = dots.GetComponent<RectTransform>();
                 dotsRt.anchorMin = new Vector2(0.05f, 0.08f);
                 dotsRt.anchorMax = new Vector2(0.95f, 0.32f);
@@ -325,27 +331,29 @@ namespace MergeMortem
 
         void BuildPanels()
         {
-            GameObject objPanel = CreatePanel("ObjectivesPanel", transform, new Vector2(0, 1), new Vector2(1, 1),
-                new Vector2(10, -660), new Vector2(-10, -656));
+            GameObject objPanel = CreatePanel("ObjectivesPanel", transform, new Vector2(0, 1), new Vector2(1, 1));
             RectTransform objRt = objPanel.GetComponent<RectTransform>();
             objRt.anchoredPosition = new Vector2(0, -660);
-            objRt.sizeDelta = new Vector2(-20, 70);
+            objRt.sizeDelta = new Vector2(-20, 90);
             VerticalLayoutGroup objVlg = objPanel.AddComponent<VerticalLayoutGroup>();
-            objVlg.padding = new RectOffset(12, 12, 6, 6);
+            objVlg.padding = new RectOffset(12, 12, 4, 4);
             objVlg.childForceExpandWidth = true;
-            objVlg.childForceExpandHeight = false;
-            objVlg.spacing = 2;
+            objVlg.childForceExpandHeight = true;
+            objVlg.spacing = 0;
 
-            Text objTitle = CreateLabel("Case objectives", objPanel.transform, 14, TextDark, FontStyle.Bold, TextAnchor.MiddleLeft);
-            objFabricText = CreateLabel("File the Fabric chain", objPanel.transform, 13, TextDark, FontStyle.Normal, TextAnchor.MiddleLeft);
-            objPrintsText = CreateLabel("File the Prints chain", objPanel.transform, 13, TextDark, FontStyle.Normal, TextAnchor.MiddleLeft);
-            objPhoneText = CreateLabel("File the Phone chain", objPanel.transform, 13, TextDark, FontStyle.Normal, TextAnchor.MiddleLeft);
+            Text objTitle = CreateLabel("Case objectives", objPanel.transform, 17, TextDark, FontStyle.Bold, TextAnchor.MiddleLeft);
+            objTitle.gameObject.AddComponent<LayoutElement>().preferredHeight = 22;
+            objFabricText = CreateLabel("File the Fabric chain", objPanel.transform, 15, TextDark, FontStyle.Normal, TextAnchor.MiddleLeft);
+            objFabricText.gameObject.AddComponent<LayoutElement>().preferredHeight = 20;
+            objPrintsText = CreateLabel("File the Prints chain", objPanel.transform, 15, TextDark, FontStyle.Normal, TextAnchor.MiddleLeft);
+            objPrintsText.gameObject.AddComponent<LayoutElement>().preferredHeight = 20;
+            objPhoneText = CreateLabel("File the Phone chain", objPanel.transform, 15, TextDark, FontStyle.Normal, TextAnchor.MiddleLeft);
+            objPhoneText.gameObject.AddComponent<LayoutElement>().preferredHeight = 20;
 
-            GameObject suspectPanel = CreatePanel("SuspectsPanel", transform, new Vector2(0, 1), new Vector2(1, 1),
-                new Vector2(10, -738), new Vector2(-10, -734));
+            GameObject suspectPanel = CreatePanel("SuspectsPanel", transform, new Vector2(0, 1), new Vector2(1, 1));
             RectTransform susRt = suspectPanel.GetComponent<RectTransform>();
-            susRt.anchoredPosition = new Vector2(0, -738);
-            susRt.sizeDelta = new Vector2(-20, 58);
+            susRt.anchoredPosition = new Vector2(0, -754);
+            susRt.sizeDelta = new Vector2(-20, 52);
             HorizontalLayoutGroup susHlg = suspectPanel.AddComponent<HorizontalLayoutGroup>();
             susHlg.padding = new RectOffset(10, 10, 8, 8);
             susHlg.spacing = 8;
@@ -356,24 +364,23 @@ namespace MergeMortem
             suspectDevChip = CreateChip(suspectPanel.transform, "Dev: unknown", out suspectDevBg);
             suspectMeenaChip = CreateChip(suspectPanel.transform, "Meena: unknown", out suspectMeenaBg);
 
-            GameObject hqPanel = CreatePanel("HQPanel", transform, new Vector2(0, 1), new Vector2(1, 1),
-                new Vector2(10, -804), new Vector2(-10, -800));
+            GameObject hqPanel = CreatePanel("HQPanel", transform, new Vector2(0, 1), new Vector2(1, 1));
             RectTransform hqRt = hqPanel.GetComponent<RectTransform>();
-            hqRt.anchoredPosition = new Vector2(0, -804);
-            hqRt.sizeDelta = new Vector2(-20, 48);
+            hqRt.anchoredPosition = new Vector2(0, -810);
+            hqRt.sizeDelta = new Vector2(-20, 40);
             VerticalLayoutGroup hqOuterVlg = hqPanel.AddComponent<VerticalLayoutGroup>();
-            hqOuterVlg.padding = new RectOffset(10, 10, 4, 4);
+            hqOuterVlg.padding = new RectOffset(10, 10, 3, 3);
             hqOuterVlg.childForceExpandWidth = true;
-            hqOuterVlg.childForceExpandHeight = false;
+            hqOuterVlg.childForceExpandHeight = true;
             hqOuterVlg.spacing = 2;
 
-            Text hqTitle = CreateLabel("Detective HQ shelf", hqPanel.transform, 12, TextDark, FontStyle.Bold, TextAnchor.MiddleLeft);
-            hqTitle.gameObject.AddComponent<LayoutElement>().preferredHeight = 16;
+            Text hqTitle = CreateLabel("Detective HQ shelf", hqPanel.transform, 13, TextDark, FontStyle.Bold, TextAnchor.MiddleLeft);
+            hqTitle.gameObject.AddComponent<LayoutElement>().preferredHeight = 14;
 
             GameObject slotsRow = new GameObject("Slots", typeof(RectTransform));
             slotsRow.transform.SetParent(hqPanel.transform, false);
             LayoutElement slotsLe = slotsRow.AddComponent<LayoutElement>();
-            slotsLe.preferredHeight = 24;
+            slotsLe.preferredHeight = 18;
             HorizontalLayoutGroup slotsHlg = slotsRow.AddComponent<HorizontalLayoutGroup>();
             slotsHlg.spacing = 8;
             slotsHlg.childForceExpandWidth = true;
@@ -389,7 +396,7 @@ namespace MergeMortem
             GameObject go = new GameObject("Slot", typeof(Image));
             go.transform.SetParent(parent, false);
             go.GetComponent<Image>().color = new Color(0, 0, 0, 0.06f);
-            Text t = CreateLabel(text, go.transform, 11, TextDark, FontStyle.Normal, TextAnchor.MiddleCenter);
+            Text t = CreateLabel(text, go.transform, 14, TextDark, FontStyle.Normal, TextAnchor.MiddleCenter);
             StretchFull(t.GetComponent<RectTransform>());
             return t;
         }
@@ -400,13 +407,13 @@ namespace MergeMortem
             go.transform.SetParent(parent, false);
             bg = go.GetComponent<Image>();
             bg.color = new Color(0, 0, 0, 0.08f);
-            Text t = CreateLabel(text, go.transform, 12, TextDark, FontStyle.Bold, TextAnchor.MiddleCenter);
+            Text t = CreateLabel(text, go.transform, 15, TextDark, FontStyle.Bold, TextAnchor.MiddleCenter);
             StretchFull(t.GetComponent<RectTransform>());
             t.horizontalOverflow = HorizontalWrapMode.Wrap;
             return t;
         }
 
-        GameObject CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 posUnused, Vector2 sizeUnused)
+        GameObject CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax)
         {
             GameObject go = new GameObject(name, typeof(Image));
             go.transform.SetParent(parent, false);
@@ -415,6 +422,8 @@ namespace MergeMortem
             RectTransform rt = go.GetComponent<RectTransform>();
             rt.anchorMin = anchorMin;
             rt.anchorMax = anchorMax;
+            rt.pivot = new Vector2(0.5f, 1f);
+            rt.sizeDelta = new Vector2(0f, 0f);
             return go;
         }
 
